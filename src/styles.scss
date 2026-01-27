@@ -1,4 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat.core();
+
+$crm-light-blue: mat.define-palette(mat.$light-blue-palette, 500, 400, 600);
+$crm-grey-blue: mat.define-palette(mat.$blue-grey-palette, 600, 500, 500);
+
+$crm-theme: mat.define-light-theme((
+  color: (
+    primary: $crm-light-blue,
+    accent: $crm-grey-blue,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($crm-theme);
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
