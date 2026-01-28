@@ -1,0 +1,89 @@
+.user-container {
+  display: flex;
+  height: 100%;
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+
+  mat-selection-list {
+    flex: 0 0 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .user-details {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    overflow-y: auto;
+
+    .user-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+
+      h2 {
+        margin: 0;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+
+        button {
+          mat-icon {
+            color: #1976d2;
+          }
+
+          &:hover mat-icon {
+            color: #1565c0;
+          }
+        }
+      }
+    }
+
+    .user-details-content {
+      p {
+        margin: 10px 0;
+      }
+    }
+  }
+
+  .no-users {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+  }
+}
+
+.fab-button {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+}
+
+.user-list-item {
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    strong {
+      font-size: 14px;
+    }
+
+    small {
+      color: #666;
+      font-size: 12px;
+    }
+  }
+}

@@ -4,17 +4,13 @@
       Logo Platzhalter
     </div>
     <div class="navigation-links">
-      <a mat-button routerLink="/dashboard" (click)="drawer.close()">
+      <a mat-button routerLink="/dashboard">
         <mat-icon>fact_check</mat-icon>
         Dashboard
       </a>
-      <a mat-button routerLink="/user" (click)="drawer.close()">
+      <a mat-button routerLink="/user">
         <mat-icon>perm_identity</mat-icon>
         User
-      </a>
-      <a mat-button routerLink="/settings" (click)="drawer.close()">
-        <mat-icon>settings</mat-icon>
-        Settings
       </a>
     </div>
   </mat-drawer>
@@ -27,7 +23,8 @@
       <span class="mat-spacer"></span>
     </mat-toolbar-row>
   </mat-toolbar>
-  
+  <div class="router-container">
     <router-outlet></router-outlet>
+  </div>
   </div> 
 </mat-drawer-container>

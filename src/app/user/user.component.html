@@ -1,1 +1,44 @@
-<p>user works!</p>
+<div class="user-container">
+  <mat-selection-list #userList (selectionChange)="onUserSelected($event)">
+    <mat-list-option
+      *ngFor="let user of users$ | async"
+      [value]="user"
+      class="user-list-item"
+    >
+      <div class="user-info">
+        <strong>{{ user.vorname }} {{ user.nachname }}</strong>
+        <small>{{ user.email }}</small>
+      </div>
+    </mat-list-option>
+  </mat-selection-list>
+
+  <div *ngIf="selectedUser" class="user-details">
+    <div class="user-header">
+      <h2>{{ selectedUser.vorname }} {{ selectedUser.nachname }}</h2>
+      <div class="action-buttons">
+        <button mat-icon-button (click)="editUser()" title="Bearbeiten">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteUser()" title="Löschen">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="user-details-content">
+      <p><strong>Email:</strong> {{ selectedUser.email }}</p>
+      <p><strong>Telefon:</strong> {{ selectedUser.telefon }}</p>
+      <p><strong>Straße:</strong> {{ selectedUser.strasse }}</p>
+      <p><strong>PLZ:</strong> {{ selectedUser.plz }}</p>
+      <p><strong>Ort:</strong> {{ selectedUser.ort }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="!selectedUser && (users$ | async)?.length === 0" class="no-users">
+    <p>Keine Users vorhanden. Erstelle einen neuen User mit dem + Button.</p>
+  </div>
+
+  <button class="fab-button" matTooltip="Add user" mat-fab color="primary" (click)="createUser()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{ data.id ? 'User bearbeiten' : 'Neuen User erstellen' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-container">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Vorname</mat-label>
+      <input matInput formControlName="vorname" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nachname</mat-label>
+      <input matInput formControlName="nachname" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Telefon</mat-label>
+      <input matInput formControlName="telefon" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Straße + Hausnummer</mat-label>
+      <input matInput formControlName="strasse" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>PLZ</mat-label>
+      <input matInput formControlName="plz" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ort</mat-label>
+      <input matInput formControlName="ort" required />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Abbrechen</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSave()"
+    [disabled]="!form.valid"
+  >
+    Speichern
+  </button>
+</mat-dialog-actions>

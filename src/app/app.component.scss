@@ -2,6 +2,7 @@
 
 .mat-drawer-container {
   height: 100vh;
+  overflow: hidden;
 }
 
 .sidenav {
@@ -32,7 +33,7 @@ mat-toolbar, mat-toolbar-row {
 .navigation-links {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   padding: 0;
   margin: 0;
@@ -57,4 +58,18 @@ mat-toolbar, mat-toolbar-row {
       color: white;
     }
   }
+}
+
+.exemple-sidenav-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.router-container {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
