@@ -93,6 +93,7 @@
           &.col-name {
             font-weight: 500;
             color: #000;
+            cursor: pointer;
 
             strong {
               color: #000;
@@ -102,6 +103,7 @@
           &.col-address {
             color: #000;
             font-size: 14px;
+            cursor: pointer;
           }
 
           &.col-email {
@@ -110,6 +112,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            cursor: pointer;
           }
 
           &.col-actions {

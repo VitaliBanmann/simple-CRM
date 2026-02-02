@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,14 +31,16 @@ export class UserComponent implements OnInit {
 
   constructor(
     private firebaseService: FirebaseService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.firebaseService.loadUsers();
   }
 
-  editUserById(user: User): void {
+  editUserById(event: Event, user: User): void {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '700px',
       data: { ...user, viewMode: false }
@@ -56,14 +59,13 @@ export class UserComponent implements OnInit {
   }
 
   viewUserById(user: User): void {
-    this.dialog.open(UserDialogComponent, {
-      width: '700px',
-      data: { ...user, viewMode: true },
-      panelClass: 'user-view-dialog'
-    });
+    if (user.id) {
+      this.router.navigate(['/user', user.id]);
+    }
   }
 
-  deleteUserById(user: User): void {
+  deleteUserById(event: Event, user: User): void {
+    event.stopPropagation();
     if (!user || !user.id) return;
 
     if (confirm(`Möchtest du ${user.vorname} ${user.nachname} wirklich löschen?`)) {

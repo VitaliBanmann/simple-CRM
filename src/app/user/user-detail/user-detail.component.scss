@@ -1,22 +1,59 @@
+.detail-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    background: white;
+    padding: 16px 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    .back-button {
+      mat-icon {
+        color: #666;
+      }
+    }
+
+    h1 {
+      flex: 1;
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+  }
+
+  .detail-content {
+    mat-card {
+      margin-top: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+      mat-card-content {
+        padding: 24px;
+      }
+    }
+  }
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 8px;
-
-  .fieldset-wrapper {
-    border: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  gap: 16px;
 
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 16px;
   }
 
   .form-field {
@@ -27,11 +64,11 @@
     width: 100%;
   }
 }
+
 .notes-container {
-  padding: 10px 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 
   .notes-input {
     display: flex;
@@ -112,5 +149,29 @@
         word-wrap: break-word;
       }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-container {
+    padding: 12px;
+
+    .detail-header {
+      flex-wrap: wrap;
+      padding: 12px;
+
+      h1 {
+        font-size: 18px;
+        flex-basis: 100%;
+      }
+
+      .header-actions {
+        margin-left: auto;
+      }
+    }
+  }
+
+  .form-container .form-row {
+    grid-template-columns: 1fr;
   }
 }

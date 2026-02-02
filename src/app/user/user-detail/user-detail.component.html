@@ -1,0 +1,118 @@
+<div class="detail-container">
+  <div class="detail-header">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ user ? user.vorname + ' ' + user.nachname : 'Benutzerdetails' }}</h1>
+    <div class="header-actions">
+      <button *ngIf="viewMode" mat-raised-button color="primary" (click)="enableEdit()">
+        <mat-icon>edit</mat-icon>
+        Bearbeiten
+      </button>
+      <button *ngIf="!viewMode" mat-button (click)="cancelEdit()">Abbrechen</button>
+      <button *ngIf="!viewMode" mat-raised-button color="primary" (click)="saveUser()" [disabled]="!form.valid || isLoading">
+        Speichern
+      </button>
+    </div>
+  </div>
+
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
+
+  <div class="detail-content">
+    <mat-tab-group>
+      <mat-tab label="Daten">
+        <mat-card class="data-card">
+          <mat-card-content>
+            <form [formGroup]="form" class="form-container">
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Vorname</mat-label>
+                  <input matInput formControlName="vorname" required />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Nachname</mat-label>
+                  <input matInput formControlName="nachname" required />
+                </mat-form-field>
+              </div>
+
+              <mat-form-field appearance="outline" class="form-field-full">
+                <mat-label>Geburtsdatum</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="geburtsdatum" placeholder="TT.MM.JJJJ">
+                <mat-hint>Klicke auf das Kalender-Icon</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field-full">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" type="email" required />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field-full">
+                <mat-label>Telefon</mat-label>
+                <input matInput formControlName="telefon" />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-field-full">
+                <mat-label>Straße + Hausnummer</mat-label>
+                <input matInput formControlName="strasse" required />
+              </mat-form-field>
+
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>PLZ</mat-label>
+                  <input matInput formControlName="plz" required />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Ort</mat-label>
+                  <input matInput formControlName="ort" required />
+                </mat-form-field>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+
+      <mat-tab label="Notizen">
+        <mat-card class="notes-card">
+          <mat-card-content>
+            <div class="notes-container">
+              <div class="notes-input">
+                <mat-form-field appearance="outline" class="notes-field">
+                  <mat-label>Neue Notiz</mat-label>
+                  <textarea matInput 
+                    [(ngModel)]="newNoteText" 
+                    rows="4"
+                    placeholder="Geben Sie eine Notiz ein...">
+                  </textarea>
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="addNote()" [disabled]="!newNoteText.trim()">
+                  <mat-icon>add</mat-icon>
+                  Notiz hinzufügen
+                </button>
+              </div>
+
+              <mat-divider></mat-divider>
+
+              <div class="notes-history">
+                <h3>Notiz-Historie</h3>
+                <div *ngIf="notes.length === 0" class="no-notes">
+                  <p>Keine Notizen vorhanden</p>
+                </div>
+                <div *ngFor="let note of notes" class="note-item">
+                  <div class="note-header">
+                    <span class="note-date">{{ formatDate(note.createdAt) }}</span>
+                    <button mat-icon-button (click)="deleteNote(note.id)" class="delete-btn">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                  <div class="note-text">{{ note.text }}</div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

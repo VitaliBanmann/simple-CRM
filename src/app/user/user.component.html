@@ -15,21 +15,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="user-row" *ngFor="let user of users$ | async" (click)="viewUserById(user)">
-          <td class="col-name">
+        <tr class="user-row" *ngFor="let user of users$ | async">
+          <td class="col-name" (click)="viewUserById(user)">
             <strong>{{ user.vorname }} {{ user.nachname }}</strong>
           </td>
-          <td class="col-address">
+          <td class="col-address" (click)="viewUserById(user)">
             {{ user.strasse }}, {{ user.plz }} {{ user.ort }}
           </td>
-          <td class="col-email">
+          <td class="col-email" (click)="viewUserById(user)">
             {{ user.email }}
           </td>
           <td class="col-actions">
-            <button mat-icon-button (click)="editUserById(user)" matTooltip="Bearbeiten" class="btn-edit">
+            <button mat-icon-button (click)="editUserById($event, user)" matTooltip="Bearbeiten" class="btn-edit">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="deleteUserById(user)" matTooltip="Löschen" class="btn-delete">
+            <button mat-icon-button (click)="deleteUserById($event, user)" matTooltip="Löschen" class="btn-delete">
               <mat-icon>delete</mat-icon>
             </button>
           </td>

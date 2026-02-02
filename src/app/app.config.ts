@@ -1,6 +1,6 @@
 import { ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { routes } from './app.routes';
@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), 
     provideClientHydration(), 
     provideAnimationsAsync(), 
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     provideNativeDateAdapter(),
     { provide: LOCALE_ID, useValue: 'de-DE' }
   ]
