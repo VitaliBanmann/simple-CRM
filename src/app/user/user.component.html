@@ -1,44 +1,50 @@
 <div class="user-container">
-  <mat-selection-list #userList (selectionChange)="onUserSelected($event)">
-    <mat-list-option
-      *ngFor="let user of users$ | async"
-      [value]="user"
-      class="user-list-item"
-    >
-      <div class="user-info">
-        <strong>{{ user.vorname }} {{ user.nachname }}</strong>
-        <small>{{ user.email }}</small>
-      </div>
-    </mat-list-option>
-  </mat-selection-list>
+  <div class="users-header">
+    <h1>Benutzerverwaltung</h1>
+    <p class="users-count">{{ (users$ | async)?.length || 0 }} Benutzer</p>
+  </div>
 
-  <div *ngIf="selectedUser" class="user-details">
-    <div class="user-header">
-      <h2>{{ selectedUser.vorname }} {{ selectedUser.nachname }}</h2>
-      <div class="action-buttons">
-        <button mat-icon-button (click)="editUser()" title="Bearbeiten">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="deleteUser()" title="Löschen">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </div>
+  <div class="table-wrapper">
+    <table class="users-table" *ngIf="(users$ | async)?.length">
+      <thead>
+        <tr>
+          <th class="col-name">Name</th>
+          <th class="col-address">Adresse</th>
+          <th class="col-email">E-Mail</th>
+          <th class="col-actions">Aktionen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="user-row" *ngFor="let user of users$ | async" (click)="viewUserById(user)">
+          <td class="col-name">
+            <strong>{{ user.vorname }} {{ user.nachname }}</strong>
+          </td>
+          <td class="col-address">
+            {{ user.strasse }}, {{ user.plz }} {{ user.ort }}
+          </td>
+          <td class="col-email">
+            {{ user.email }}
+          </td>
+          <td class="col-actions">
+            <button mat-icon-button (click)="editUserById(user)" matTooltip="Bearbeiten" class="btn-edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteUserById(user)" matTooltip="Löschen" class="btn-delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-    <div class="user-details-content">
-      <p><strong>Email:</strong> {{ selectedUser.email }}</p>
-      <p><strong>Telefon:</strong> {{ selectedUser.telefon }}</p>
-      <p><strong>Straße:</strong> {{ selectedUser.strasse }}</p>
-      <p><strong>PLZ:</strong> {{ selectedUser.plz }}</p>
-      <p><strong>Ort:</strong> {{ selectedUser.ort }}</p>
+    <div *ngIf="!(users$ | async)?.length" class="no-users">
+      <mat-icon class="empty-icon">person_off</mat-icon>
+      <p>Keine Benutzer vorhanden</p>
+      <p class="empty-hint">Erstelle einen neuen Benutzer mit dem + Button</p>
     </div>
   </div>
 
-  <div *ngIf="!selectedUser && (users$ | async)?.length === 0" class="no-users">
-    <p>Keine Users vorhanden. Erstelle einen neuen User mit dem + Button.</p>
-  </div>
-
-  <button class="fab-button" matTooltip="Add user" mat-fab color="primary" (click)="createUser()">
+  <button class="fab-button" matTooltip="Benutzer hinzufügen" mat-fab color="primary" (click)="createUser()">
     <mat-icon>add</mat-icon>
   </button>
 </div>

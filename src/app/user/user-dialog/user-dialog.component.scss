@@ -1,10 +1,116 @@
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   margin-top: 20px;
 
-  .full-width {
+  .fieldset-wrapper {
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-field {
     width: 100%;
+  }
+
+  .form-field-full {
+    width: 100%;
+  }
+}
+.notes-container {
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .notes-input {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .notes-field {
+      width: 100%;
+    }
+
+    button {
+      align-self: flex-start;
+    }
+  }
+
+  .notes-history {
+    h3 {
+      margin: 12px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .no-notes {
+      padding: 20px;
+      text-align: center;
+      color: #999;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+    }
+
+    .note-item {
+      background-color: #f5f5f5;
+      border-left: 3px solid #3949ab;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #efefef;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .note-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        .note-date {
+          font-size: 12px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        .delete-btn {
+          margin-right: -8px;
+
+          mat-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            color: #999;
+
+            &:hover {
+              color: #d32f2f;
+            }
+          }
+        }
+      }
+
+      .note-text {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.4;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    }
   }
 }

@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatListModule, MatSelectionListChange } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FirebaseService } from '../services/firebase.service';
 import { User } from '../models/user.model';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [
     CommonModule,
-    MatListModule,
+    MatCardModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
     MatTooltipModule,
     UserDialogComponent
-
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
@@ -38,25 +37,17 @@ export class UserComponent implements OnInit {
     this.firebaseService.loadUsers();
   }
 
-  onUserSelected(event: MatSelectionListChange): void {
-    if (event.options && event.options.length > 0) {
-      this.selectedUser = event.options[event.options.length - 1].value;
-    }
-  }
-
-  editUser(): void {
-    if (!this.selectedUser) return;
-
+  editUserById(user: User): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '500px',
-      data: { ...this.selectedUser }
+      width: '700px',
+      data: { ...user, viewMode: false }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.firebaseService.updateUser(result).subscribe(
           () => {
-            this.selectedUser = result;
+            console.log('User aktualisiert');
           },
           (error) => console.error('Fehler beim Aktualisieren:', error)
         );
@@ -64,13 +55,21 @@ export class UserComponent implements OnInit {
     });
   }
 
-  deleteUser(): void {
-    if (!this.selectedUser || !this.selectedUser.id) return;
+  viewUserById(user: User): void {
+    this.dialog.open(UserDialogComponent, {
+      width: '700px',
+      data: { ...user, viewMode: true },
+      panelClass: 'user-view-dialog'
+    });
+  }
 
-    if (confirm('Möchtest du diesen User wirklich löschen?')) {
-      this.firebaseService.deleteUser(this.selectedUser.id).subscribe(
+  deleteUserById(user: User): void {
+    if (!user || !user.id) return;
+
+    if (confirm(`Möchtest du ${user.vorname} ${user.nachname} wirklich löschen?`)) {
+      this.firebaseService.deleteUser(user.id).subscribe(
         () => {
-          this.selectedUser = null;
+          console.log('User gelöscht');
         },
         (error) => console.error('Fehler beim Löschen:', error)
       );
@@ -79,7 +78,7 @@ export class UserComponent implements OnInit {
 
   createUser(): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '500px',
+      width: '700px',
       data: {}
     });
 

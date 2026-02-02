@@ -1,52 +1,108 @@
-<h2 mat-dialog-title>{{ data.id ? 'User bearbeiten' : 'Neuen User erstellen' }}</h2>
+<h2 mat-dialog-title>
+  {{ viewMode ? 
+    (data.vorname ? data.vorname + ' ' + data.nachname : 'Benutzerdetails') 
+    : (data.id ? 'User bearbeiten' : 'Neuen User erstellen') }}
+</h2>
+
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="primary"></mat-progress-bar>
 
 <mat-dialog-content>
-  <form [formGroup]="form" class="form-container">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Vorname</mat-label>
-      <input matInput formControlName="vorname" required />
-    </mat-form-field>
+  <mat-tab-group>
+    <mat-tab label="Daten">
+      <form [formGroup]="form" class="form-container">
+        <fieldset [disabled]="isLoading" class="fieldset-wrapper">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Vorname</mat-label>
+              <input matInput formControlName="vorname" required />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Nachname</mat-label>
+              <input matInput formControlName="nachname" required />
+            </mat-form-field>
+          </div>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nachname</mat-label>
-      <input matInput formControlName="nachname" required />
-    </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>Geburtsdatum</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="geburtsdatum" placeholder="TT.MM.JJJJ">
+            <mat-hint>Klicke auf das Kalender-Icon</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" type="email" required />
-    </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required />
+          </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Telefon</mat-label>
-      <input matInput formControlName="telefon" />
-    </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>Telefon</mat-label>
+            <input matInput formControlName="telefon" />
+          </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Straße + Hausnummer</mat-label>
-      <input matInput formControlName="strasse" required />
-    </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-full">
+            <mat-label>Straße + Hausnummer</mat-label>
+            <input matInput formControlName="strasse" required />
+          </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>PLZ</mat-label>
-      <input matInput formControlName="plz" required />
-    </mat-form-field>
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>PLZ</mat-label>
+              <input matInput formControlName="plz" required />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Ort</mat-label>
+              <input matInput formControlName="ort" required />
+            </mat-form-field>
+          </div>
+        </fieldset>
+      </form>
+    </mat-tab>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Ort</mat-label>
-      <input matInput formControlName="ort" required />
-    </mat-form-field>
-  </form>
+    <mat-tab label="Notizen">
+      <div class="notes-container">
+        <div class="notes-input">
+          <mat-form-field appearance="outline" class="notes-field">
+            <mat-label>Neue Notiz</mat-label>
+            <textarea matInput 
+              [(ngModel)]="newNoteText" 
+              rows="3"
+              placeholder="Geben Sie eine Notiz ein...">
+            </textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="addNote()" [disabled]="!newNoteText.trim()">
+            <mat-icon>add</mat-icon>
+            Notiz hinzufügen
+          </button>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="notes-history">
+          <h3>Notiz-Historia</h3>
+          <div *ngIf="notes.length === 0" class="no-notes">
+            <p>Keine Notizen vorhanden</p>
+          </div>
+          <div *ngFor="let note of notes" class="note-item">
+            <div class="note-header">
+              <span class="note-date">{{ formatDate(note.createdAt) }}</span>
+              <button mat-icon-button (click)="deleteNote(note.id)" class="delete-btn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <div class="note-text">{{ note.text }}</div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Abbrechen</button>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="onSave()"
-    [disabled]="!form.valid"
-  >
-    Speichern
+  <button mat-button (click)="onCancel()" [disabled]="isLoading">
+    {{ viewMode ? 'Schließen' : 'Abbrechen' }}
+  </button>
+  <button *ngIf="!viewMode" mat-raised-button color="primary" (click)="onSave()" [disabled]="!form.valid || isLoading">
+    {{ isLoading ? 'Wird gespeichert...' : 'Speichern' }}
   </button>
 </mat-dialog-actions>
