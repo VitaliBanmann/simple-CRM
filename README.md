@@ -1,27 +1,124 @@
-# CRM
+# 📊 Simple CRM - Customer Relationship Management
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
+> Ein schlankes CRM-System mit Angular. Verwalte Kundenbeziehungen, tracke Kontakte und behalte den Überblick über deine Verkaufs-Pipeline.
 
-## Development server
+## 🎯 Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- ✅ **Kundenverwaltung** - Zentrale Kundendatenbank
+- ✅ **Kontakt-Tracking** - Kommunikationsverlauf pro Kunde
+- ✅ **Verkaufs-Pipeline** - Deals und Status-Verwaltung
+- ✅ **Task-Management** - Aufgaben & Erinnerungen
+- ✅ **Dashboard** - Übersicht & Statistiken
+- ✅ **Benutzer-Rollen** - Unterschiedliche Zugriffsebenen
+- ✅ **Responsive Design** - Mobil & Desktop optimiert
+- ✅ **Export-Funktion** - Daten exportieren
 
-## Code scaffolding
+## 🔧 Tech Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Frontend:** Angular 17+
+- **Language:** TypeScript
+- **Backend:** Firebase/Firestore
+- **Authentifizierung:** Firebase Auth
+- **Styling:** SCSS/CSS3
+- **Charts:** Angular Charts
 
-## Build
+## 🚀 Quick Start
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+# Dependencies installieren
+npm install
 
-## Running unit tests
+# Development-Server starten
+npm start
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Im Browser öffnen
+# http://localhost:4200
+```
 
-## Running end-to-end tests
+## 📖 Verwendung
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 1. Anmeldung
+- Account erstellen oder einloggen
+- Zur Dashboard-Übersicht navigieren
 
-## Further help
+### 2. Kunden verwalten
+- Neue Kunden über "+ Hinzufügen" erfassen
+- Kontaktdaten, Notizen und Status pflegen
+- Kommunikationsverlauf eintragen
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 3. Verkaufs-Pipeline
+- Deals in verschiedene Phasen einteilen:
+  - 🔵 Lead
+  - 🟡 Qualifiziert
+  - 🟠 Angebot gesendet
+  - ✅ Gewonnen / ❌ Verloren
+- Wahrscheinlichkeit und Wert erfassen
+
+### 4. Aufgaben
+- Tasks Kunden oder Deals zuordnen
+- Fälligkeitsdaten & Prioritäten setzen
+- Erledigte Tasks abhaken
+
+## 🔨 Verfügbare Befehle
+
+```bash
+npm start              # Dev-Server (http://localhost:4200)
+npm run build         # Production Build
+npm test              # Unit Tests
+npm run lint          # Linting
+```
+
+## 📁 Projektstruktur
+
+```
+src/app/
+├── components/
+│   ├── dashboard/       # Übersichts-Dashboard
+│   ├── customers/       # Kundenverwaltung
+│   ├── deals/          # Deal-Management
+│   ├── tasks/          # Task-Übersicht
+│   └── reports/        # Reporting
+├── services/
+│   ├── customer.service.ts
+│   ├── deal.service.ts
+│   └── firebase.service.ts
+├── models/
+│   ├── customer.model.ts
+│   └── deal.model.ts
+└── shared/
+    ├── components/
+    └── guards/
+```
+
+## 🔐 Firebase Konfiguration
+
+Firestore Collections:
+```
+customers/   → Kundendaten
+deals/       → Verkaufs-Opportunities
+tasks/       → Aufgaben
+contacts/    → Kommunikationsverlauf
+```
+
+1. Firebase Projekt in der [Firebase Console](https://console.firebase.google.com) erstellen
+2. Firestore Database aktivieren
+3. Authentication (Email/Password) aktivieren
+4. Config in `src/environments/environment.ts` eintragen
+
+## 🚢 Deployment
+
+```bash
+# Production Build
+npm run build
+
+# Deploy mit Firebase Hosting
+firebase deploy
+```
+
+## 📞 Support
+
+Bei Fragen oder Issues: [GitHub Issues](https://github.com/VitaliBanmann/simple-CRM/issues)
+
+---
+
+_Ein schlankes Angular-CRM für effizientes Kundenmanagement._
